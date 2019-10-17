@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/product/layout :: head"></head>
+<body>
+<h3>Chỉnh sửa sản phẩm</h3>
+<p>
+    <a th:href="@{/products}">
+        Trở lại trang danh sách sản phẩm
+    </a>
+</p>
+<th:block th:if="${message}">
+    <p th:text="${message}"></p>
+</th:block>
+<form th:action="@{/edit-product}" th:object="${product}" method="post"novalidate="novalidate" enctype="multipart/form-data">
+    <input th:type="hidden" name="id" th:field="*{id}">
+    <table>
+        <tr>
+            <td>Sản phẩm:</td>
+            <td><input type="text" th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <td>Giá:</td>
+            <td><input type="text" th:field="*{price}"/></td>
+        </tr>
+<!--        <tr>-->
+<!--            <td>Hình ảnh:</td>-->
+<!--            <td><img width="150px" height="150px" th:src="@{'/image/' + ${product.img}}"/></td>-->
+
+<!--            <td><input type="file" th:field="*{img}"></td>-->
+<!--        </tr>-->
+
+        <tr>
+            <td>Mô tả:</td>
+            <td><input type="text" th:field="*{description}"/></td>
+        </tr>
+        <tr>
+            <td>Tác giả:</td>
+            <td>
+                <select name="author">
+                    <option th:each="p : ${authors}"
+                            th:value="${p.id}"
+                            th:text="${p.name}"
+                            th:selected="(${p.id} == *{author.id})"></option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Edit product"></td>
+        </tr>
+    </table>
+
+
+<!--    <footer th:replace="layout :: footer"></footer>-->
+</form>
+</body>
+</html>
