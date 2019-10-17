@@ -68,10 +68,10 @@ public class ProductController {
 
     @GetMapping("/edit-product/{id}")
     public ModelAndView showEditForm(@PathVariable Long id) {
-        Optional<Product> product = productService.findById(id);
+        Product product = productService.findById(id);
         if (product != null) {
             ModelAndView modelAndView = new ModelAndView("/product/edit");
-            modelAndView.addObject("product", product.get());
+            modelAndView.addObject("product", product);
             return modelAndView;
         } else {
             ModelAndView modelAndView = new ModelAndView(("/error.404"));
@@ -89,10 +89,10 @@ public class ProductController {
 
     @GetMapping("/delete-product/{id}")
     public ModelAndView showDeleteForm(@PathVariable Long id) {
-        Optional<Product> product = productService.findById(id);
+        Product product = productService.findById(id);
         if (product != null) {
             ModelAndView modelAndView = new ModelAndView("/product/delete");
-            modelAndView.addObject("product", product.get());
+            modelAndView.addObject("product", product);
             return modelAndView;
 
         } else {
@@ -109,9 +109,9 @@ public class ProductController {
     }
     @GetMapping("/view-product/{id}")
     public ModelAndView viewProduct(@PathVariable Long id) {
-        Optional<Product> product = productService.findById(id);
+        Product product = productService.findById(id);
         ModelAndView modelAndView = new ModelAndView("/product/view");
-        modelAndView.addObject("product", product.get());
+        modelAndView.addObject("product", product);
         return modelAndView;
     }
 

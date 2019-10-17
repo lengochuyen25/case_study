@@ -1,69 +1,44 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/product/layout :: head"></head>
 <body>
 <div class="top_header">
 </div>
-
-<div sec:authorize="isAuthenticated()">
-    <a th:href="@{/}" class="a_title_small">Trang chủ</a> <span class="xo">|</span> <a th:href="@{/logout}" class="a_title_small">Đăng xuất</a>
-</div>
-
-
-<p>
-    <a th:href="@{/create-product}" class="a_title_small">
-        Thêm sản phẩm mới
-    </a>
-</p>
+<h1 class="a_base">Xóa sản phẩm</h1>
+<span class="span_title">Bạn chắc chắn muốn xóa sản phẩm này?</span>
+<p><a href="/products_customer" class="a_title_small">Trở lại danh sách sản phẩm</a> </p>
 
 
-
-
-<form class="form_search">
-    <input name="s" class="search_input" type="text" placeholder="Nhập tên sách bạn muốn tìm kiếm :"/>
-    <button type="submit" value="Tìm kiếm" class="search_button">Tìm kiếm</button>
-</form><br/>
-
-
-
-<table id="products">
-    <tr>
-        <th>Sản phẩm</th>
-        <th>Giá</th>
-        <th>Hình ảnh</th>
-        <th>Mô tả</th>
-        <th>Tác giả</th>
-        <th>Sửa</th>
-        <th>Xóa</th>
-    </tr>
-
-
-    <th:block th:each="product:${products}">
+<form th:action="@{/shoppingcart/delete/__${item.product.id}__}" th:object="${item}" method="post" class="form_search">
+    <table>
         <tr>
-            <td><a th:href="@{/view-product/__${product.id}__ }"><p th:text="${product.name}"></p></a></td>
-            <td th:text="${product.price}"></td>
-            <td><img width="150px" height="150px" th:src="@{'/image/' + ${product.img}}"/></td>
-            <td th:text="${product.description}"></td>
-
-            <td th:text="${product.author.name}"></td>
-
-            <td><a th:href="@{/edit-product/__${product.id}__ }">Sửa</a></td>
-            <td><a th:href="@{/delete-product/__${product.id}__}">Xóa</a></td>
-
+            <td>Sản phẩm:</td>
+            <td><input type="text" th:field="${item.product.name}" class="search_input"/></td>
         </tr>
-    </th:block>
+        <tr>
+            <td>Hình ảnh:</td>
+            <td><img width="150px" height="150px" th:src="@{'/image/' + ${item.product.img}}" /></td>
+        </tr>
+        <tr>
+            <td>Mô tả:</td>
+            <td><input type="text" th:field="${item.product.description}" class="search_input"/></td>
+        </tr>
+        <tr>
+            <td>Giá:</td>
+            <td><input type="text" th:field="${item.product.price}" class="search_input"/></td>
+        </tr>
+        <tr>
+            <td>Số lượng:</td>
+            <td><input th:value="${item.quantity}" name="quantity" class="search_input"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="button_"><button type="submit" value="Xóa" class="search_button">Xóa sản phẩm</button></td>
+        </tr>
+    </table>
+</form>
 
-
-</table>
-<div class="paginate">
-    <a th:href="@{'/products'(page=${products.number - 1})}" th:if="${products.hasPrevious()}">Trang trước</a>
-    <span th:text="${products.number + 1}"></span>/<span th:text="${products.totalPages}"></span>
-    <a th:href="@{'/products'(page=${products.number + 1})}" th:if="${products.hasNext()}">Trang sau</a>
-</div>
 <footer th:replace="/product/layout :: footer"></footer>
-
-
 <style>
     body {
         font-family: 'Roboto',sans-serif;
@@ -72,6 +47,9 @@
         font-weight: 400;
         text-align: center;
         margin: 0;
+    }
+    tbody {
+        text-align: left;
     }
     .xo {
         color: #ddd;
@@ -163,9 +141,14 @@
         cursor: pointer;
         text-align: center;
         height: 40px;
+        margin-top: 30px;
     }
     .search_button:hover {
         background: #5fd768;
+    }
+    .button_ {
+        text-align: left;
+        padding-left: 40px;
     }
     .paginate {
         margin-top: 25px;
@@ -186,7 +169,6 @@
         padding: 30px 0;
     }
 </style>
-<!--<footer th:replace="/product/layout :: footer"></footer>-->
 </body>
 </html>
 

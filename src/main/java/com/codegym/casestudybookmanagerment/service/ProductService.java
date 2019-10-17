@@ -11,7 +11,7 @@ public interface  ProductService {
 
     Page<Product> findAll(Pageable pageable);
 
-    Optional<Product> findById(Long id);
+    Product findById(Long id);
 
     void save(ProductForm productForm);
 
