@@ -107,6 +107,8 @@ public class ProductController {
         productService.remove(product.getId());
         return "redirect:products";
     }
+
+
     @GetMapping("/view-product/{id}")
     public ModelAndView viewProduct(@PathVariable Long id) {
         Product product = productService.findById(id);
